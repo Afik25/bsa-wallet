@@ -1,0 +1,18 @@
+.button {
+  @include padding(0.8em);
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  letter-spacing: 1px;
+  transition: all 0.3s ease-in-out;
+}
+.normal {
+  background-color: $grey-color-1;
+}
+.validate {
+  background-color: $color-1;
+}
+.danger {
+  background-color: $red-color;
+}
+

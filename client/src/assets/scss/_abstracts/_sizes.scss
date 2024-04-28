@@ -1,0 +1,29 @@
+$size-01: 0.1em;
+$size-02: 0.2em;
+$size-03: 0.3em;
+$size-04: 0.4em;
+$size-05: 0.5em;
+$size-06: 0.6em;
+$size-07: 0.7em;
+$size-08: 0.8em;
+$size-09: 0.9em;
+$size-1: 1em;
+$size-101: 1.1em;
+$size-102: 1.2em;
+$size-103: 1.3em;
+$size-104: 1.4em;
+$size-105: 1.5em;
+$size-106: 1.6em;
+$size-107: 1.7em;
+$size-108: 1.8em;
+$size-109: 1.9em;
+$size-2: 2em;
+$size-3: 3em;
+
+@mixin margin($padding: 10px) {
+  margin: $padding;
+}
+
+@mixin padding($padding: 10px) {
+  padding: $padding;
+}

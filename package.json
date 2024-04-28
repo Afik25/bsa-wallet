@@ -1,0 +1,34 @@
+{
+  "name": "masomo",
+  "version": "1.0.0",
+  "description": "EduTech Platform",
+  "main": "index.js",
+  "scripts": {
+    "build": "cd server && npm install && cd ../client && npm install && npm run build",
+    "start": "cd server && node ./src/server.js",
+    "server": "node ./server/src/server.js",
+    "client": "cd client && npm start",
+    "dev-c": "cd client && npm start",
+    "dev-s": "cd server && npm run dev",
+    "dev": "concurrently \"npm run dev-s\" \"npm run dev-c\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Afik25/masomo.git"
+  },
+  "keywords": [
+    "school",
+    "ecole",
+    "masomo",
+    "etudier"
+  ],
+  "author": "Afik Foundation",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Afik25/masomo/issues"
+  },
+  "homepage": "https://github.com/Afik25/masomo#readme",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

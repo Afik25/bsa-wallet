@@ -1,0 +1,72 @@
+.menu-drawer {
+  width: 40px;
+  height: 35px;
+  /* border: 1px solid #121a5a; */
+  /* border-radius: 4px; */
+  cursor: pointer;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  /* box-shadow: 0 2px 5px rgba(18, 26, 90, 0.2); */
+  transition: all 0.5s ease-in-out;
+
+  &:hover {
+    .burger,
+    .burger::before,
+    .burger::after {
+      background-color: $color-2;
+    }
+  }
+}
+.burger {
+  width: 30px;
+  height: 2px;
+  background: $black-color;
+  /* border-radius: 5px; */
+  transition: all 0.5s ease-in-out;
+}
+.burger::before,
+.burger::after {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 2px;
+  background: $black-color;
+  /* border-radius: 5px; */
+  /* box-shadow: 0 2px 5px rgba(18, 26, 90, 0.2); */
+  transition: all 0.5s ease-in-out;
+}
+.burger::before {
+  transform: translateY(-16px);
+  top: 25px;
+}
+.burger::after {
+  transform: translateY(16px);
+  bottom: 25px;
+}
+
+.menu-drawer.open .burger {
+  transform: translateX(-30px);
+  background: transparent;
+  box-shadow: none;
+}
+.menu-drawer.open .burger::before {
+  background-color: $color-2;
+  transform: rotate(45deg) translate(1px, -35px);
+}
+.menu-drawer.open .burger::after {
+  background-color: $color-2;
+  transform: rotate(-45deg) translate(1px, 35px);
+}
+
+@media only screen and (max-width: 688px) {
+  .menu-drawer {
+    display: flex;
+  }
+}
+@media only screen and (max-width: 1312px) {
+}
+
+@media only screen and (max-width: 992px) {
+}

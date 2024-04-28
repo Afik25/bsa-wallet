@@ -1,0 +1,724 @@
+.header {
+  position: relative;
+  width: 100%;
+  height: 80px;
+  transition: all 0.3s ease-in-out;
+  .container {
+    @include margin(auto);
+    @include padding($size-03);
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .nav {
+      display: flex;
+      .nav-item {
+        @include margin(0 $size-09);
+        font-size: $size-107;
+        font-weight: bold;
+        transition: all 0.3s ease-in-out;
+        &:hover {
+          color: $color-2;
+        }
+      }
+    }
+    .sign-nav {
+      display: flex;
+      align-items: center;
+      .button {
+        border-radius: $size-05;
+        font-size: $size-107;
+        @include margin(0 $size-05);
+        &:nth-child(1) {
+          color: $color-4;
+          font-weight: bold;
+          &:hover {
+            background-color: $color-4;
+            color: $white-color;
+          }
+        }
+        &:nth-child(2) {
+          background-color: $color-2;
+          color: $white-color;
+          &:hover {
+            background-color: $white-color;
+            border: 1px solid $color-2;
+            color: $color-2;
+          }
+        }
+      }
+    }
+  }
+}
+.header.fixed {
+  position: fixed;
+  background-color: $white-color;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+  transition: all 0.3s ease-in-out;
+  z-index: 99;
+}
+.footer {
+  width: 100%;
+  background-color: $color-1;
+  .container {
+    width: 90%;
+    margin: auto;
+    .top,
+    .bottom {
+      width: 100%;
+    }
+    .top {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      @include padding(2em 0);
+      .left {
+        img {
+          width: 320px;
+          height: 80px;
+        }
+        .t-3 {
+          color: $white-color;
+          font-size: $size-07;
+        }
+      }
+      .center {
+        display: flex;
+        flex-direction: column;
+        .t-2 {
+          color: $gold-color;
+          font-weight: bold;
+        }
+        .link {
+          color: $white-color;
+          margin-bottom: 0.5em;
+          transition: all 0.3s ease-in-out;
+          &:hover {
+            color: $grey-color-2;
+          }
+        }
+      }
+      .socials-network {
+        display: flex;
+        flex-direction: row;
+        .link {
+          margin-right: 0.9em;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          transition: all 0.3s ease-in-out;
+          .icon {
+            height: 40px;
+            width: 40px;
+            background-color: $white-color;
+            border-radius: 1em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 0.5em;
+          }
+          .social {
+            color: $white-color;
+            font-size: $size-07;
+          }
+          &:nth-child(1) {
+            .icon {
+              color: $color-2;
+            }
+          }
+          &:nth-child(2) {
+            .icon {
+              color: $color-2;
+            }
+          }
+          &:nth-child(3) {
+            .icon {
+              color: $color-2;
+            }
+          }
+          &:nth-child(4) {
+            .icon {
+              color: $red-color;
+            }
+          }
+
+          &:hover {
+            .icon {
+              color: $grey-color-2;
+            }
+          }
+        }
+      }
+      .right {
+        display: flex;
+        flex-direction: column;
+        .t-2 {
+          color: $gold-color;
+          font-weight: bold;
+        }
+        .t-3 {
+          display: flex;
+          align-items: center;
+          color: $white-color;
+          .icon {
+            margin-right: 0.5em;
+            font-size: 2em;
+          }
+        }
+      }
+    }
+    .bottom {
+      border-top: 1px solid $white-color;
+      display: flex;
+      justify-content: space-between;
+      @include padding(1.5em 0);
+      .left {
+        span {
+          color: $white-color;
+          font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+          margin-right: 0.5em;
+        }
+        .link {
+          color: $gold-color;
+          font-weight: bold;
+          transition: all 0.3s ease-in-out;
+          &:hover {
+            color: $color-3;
+          }
+        }
+      }
+      .right {
+        .link {
+          color: $white-color;
+          margin-left: 1em;
+          transition: all 0.3s ease-in-out;
+          &:hover {
+            color: $grey-color-1;
+          }
+        }
+      }
+    }
+  }
+}
+
+.user-head {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .input-div {
+    width: 50%;
+    margin: 0;
+  }
+  .options {
+    position: relative;
+    .option {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      border-radius: 100%;
+      background-color: $grey-color-3;
+      margin: 0px 0.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.5s ease-in-out;
+      overflow: hidden;
+      .icon-element {
+        font-size: $size-2;
+      }
+      img {
+        width: 100%;
+        height: 100%;
+      }
+      span {
+        width: 10px;
+        height: 10px;
+        border-radius: 100%;
+        background-color: $red-color;
+        position: absolute;
+        right: 8px;
+        top: 8px;
+      }
+      &:hover {
+        background-color: $black-color;
+        .icon-element {
+          color: $white-color;
+        }
+      }
+    }
+    .profile {
+      position: relative;
+      .t-2 {
+        font-size: $size-105;
+        margin: 0 0.5rem;
+      }
+      .display {
+        display: block !important;
+        animation: zoomIn 0.3s ease-in-out;
+      }
+      @keyframes zoomIn {
+        0% {
+          transform: scale(0.8);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      .profile-item {
+        .t-2 {
+          color: $white-color;
+          font-weight: bold;
+          color: $black-color;
+        }
+        .icon {
+          color: $grey-color-1;
+        }
+      }
+      .profile-item:last-child {
+        position: absolute;
+        background-color: $white-color;
+        border-radius: 0.5rem;
+        border-bottom: 1px solid $grey-color-3;
+        display: flex;
+        flex-direction: column;
+        right: 0;
+        top: 45px;
+        z-index: 10;
+        display: none;
+        overflow: hidden;
+
+        .nav-link {
+          text-decoration: none;
+          color: $black-color;
+          cursor: pointer;
+          padding: 0.5rem 1rem;
+          font-size: $size-105;
+
+          display: flex;
+          align-items: center;
+
+          .icon {
+            margin-right: 0.5rem;
+            color: $grey-color-1;
+          }
+
+          &:hover {
+            background-color: $grey-color-3;
+          }
+        }
+      }
+    }
+  }
+}
+.navigations {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  border-top: 1px solid $grey-color-3;
+  border-bottom: 1px solid $grey-color-3;
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .link {
+      @include margin(0 $size-05);
+      @include padding($size-1);
+      display: flex;
+      align-items: center;
+      font-size: $size-105;
+      background-color: $white-color;
+      transition: all 0.3s ease-in-out;
+      .option-icon {
+        margin-right: $size-1;
+      }
+      span {
+        text-align: justify;
+      }
+      &:hover {
+        background-color: $grey-color-3;
+      }
+    }
+    .active-option {
+      border-bottom: 2px solid $color-1;
+      color: $color-1;
+      font-weight: bold;
+    }
+    .inactive-option {
+      border-bottom: unset;
+      color: unset;
+      font-weight: unset;
+    }
+  }
+}
+.course-item {
+  width: 418px;
+  height: 250px;
+  border: 1px solid $grey-color-2;
+  border-radius: $size-09;
+  @include margin($size-05);
+  overflow: hidden;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+  img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+  .inner {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.55);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .t-2 {
+      font-size: $size-3;
+    }
+  }
+  .outer {
+    display: none;
+    position: absolute;
+    width: 40%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.65);
+    z-index: 2;
+    .t-3 {
+      font-size: $size-107;
+    }
+  }
+  .inner,
+  .outer {
+    @include padding($size-05);
+    .title {
+      color: $white-color;
+      text-align: center;
+    }
+  }
+  &:hover {
+    .outer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
+.complete-register {
+  width: 100%;
+  height: 100%;
+  .cr-head {
+    display: flex;
+    justify-content: center;
+    height: 40px;
+    margin-bottom: 10px;
+    .cr-tab {
+      height: 100%;
+      color: $grey-color-1;
+      font-size: $size-1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      @include padding(1rem);
+    }
+    .active-tab {
+      background-color: $color-1;
+      border-radius: 0.5rem;
+      color: $white-color;
+      font-weight: bold;
+      transition: all 0.3s ease-in;
+      span {
+        letter-spacing: 1px;
+      }
+    }
+  }
+  .cr-body {
+    height: calc(100% - 50px);
+    .steps {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      padding-top: 1rem;
+    }
+    .buttons{
+      text-align: center;
+      .validate{
+        width: 30%;
+        border-radius: $size-03;
+        color: $white-color;
+      }
+    }
+  }
+}
+
+.switch-wrapper {
+  border: 1px solid $grey-color-3;
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px;
+  width: 110px;
+  @include padding(0.5rem);
+  img{
+    width: 20px;
+    height: 20px;
+  }
+  span {
+    font-size: $size-1;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+  .switch {
+    position: relative;
+    width: 60%;
+    height: 100%;
+    background-color: $grey-color-3;
+    border-radius: 1rem;
+    cursor: pointer;
+
+    .switched {
+      position: relative;
+      top: -1px;
+      width: 25px;
+      height: 25px;
+      background-color: $red-color;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all 200ms ease-in-out;
+      .icon {
+        color: $white-color;
+        font-size: $size-1;
+      }
+    }
+
+    .switched-active {
+      margin-left: auto;
+      background-color: $green-color !important;
+    }
+    .switched-inactive {
+      margin-right: auto;
+      background-color: $grey-color-1;
+    }
+  }
+}
+
+@media only screen and (max-width: 688px) {
+  .header {
+    height: auto;
+    .container {
+      flex-wrap: wrap;
+      .nav {
+        display: none;
+        width: 100%;
+        @include padding($size-105 0);
+      }
+      .sign-nav {
+        display: none;
+        width: 100%;
+        @include padding($size-105 0);
+      }
+    }
+  }
+  .footer {
+    width: 100%;
+    background-color: $color-1;
+    .container {
+      width: 90%;
+      margin: auto;
+      .top,
+      .bottom {
+        width: 100%;
+      }
+      .top {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        @include padding(2em 0);
+        .left {
+          width: 100%;
+          text-align: center;
+          img {
+            width: 320px;
+            height: 80px;
+          }
+          .t-3 {
+            color: $white-color;
+            font-size: $size-07;
+          }
+        }
+        .center {
+          width: 48%;
+          display: flex;
+          flex-direction: column;
+          @include padding($size-3 0);
+          .t-2 {
+            color: $gold-color;
+            font-weight: bold;
+          }
+          .link {
+            color: $white-color;
+            margin-bottom: 0.5em;
+            transition: all 0.3s ease-in-out;
+            &:hover {
+              color: $grey-color-2;
+            }
+          }
+        }
+        .right {
+          width: 48%;
+          display: flex;
+          flex-direction: column;
+          @include padding($size-3 0);
+          .t-2 {
+            color: $gold-color;
+            font-weight: bold;
+          }
+          .t-3 {
+            display: flex;
+            align-items: center;
+            color: $white-color;
+            .icon {
+              margin-right: 0.5em;
+              font-size: 2em;
+            }
+          }
+        }
+        .socials-network {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          flex-direction: row;
+          .link {
+            margin-right: 0.9em;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            transition: all 0.3s ease-in-out;
+            .icon {
+              height: 40px;
+              width: 40px;
+              background-color: $white-color;
+              border-radius: 1em;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              margin-right: 0.5em;
+            }
+            .social {
+              color: $white-color;
+              font-size: $size-07;
+            }
+
+            &:nth-child(1) {
+              .icon {
+                color: $color-2;
+              }
+            }
+            &:nth-child(2) {
+              .icon {
+                color: $color-3;
+              }
+            }
+            &:nth-child(3) {
+              .icon {
+                color: $color-2;
+              }
+            }
+            &:nth-child(4) {
+              .icon {
+                color: $red-color;
+              }
+            }
+
+            &:hover {
+              .icon {
+                color: $grey-color-2;
+              }
+            }
+          }
+        }
+      }
+      .bottom {
+        border-top: 1px solid $white-color;
+        display: flex;
+        justify-content: space-between;
+        @include padding(1.5em 0);
+        .left {
+          span {
+            color: $white-color;
+            font-family: Cambria, Cochin, Georgia, Times, "Times New Roman",
+              serif;
+            margin-right: 0.5em;
+          }
+          .link {
+            color: $gold-color;
+            font-weight: bold;
+            transition: all 0.3s ease-in-out;
+            &:hover {
+              color: $color-3;
+            }
+          }
+        }
+        .right {
+          .link {
+            color: $white-color;
+            margin-left: 1em;
+            transition: all 0.3s ease-in-out;
+            &:hover {
+              color: $grey-color-1;
+            }
+          }
+        }
+      }
+    }
+  }
+  .user-head {
+    height: 130px;
+    flex-wrap: wrap;
+    .input-div {
+      order: 3;
+      width: 90%;
+      margin: auto;
+    }
+  }
+  .navigations {
+    height: 60px;
+    .container {
+      width: 95%;
+      justify-content: flex-start;
+      overflow-x: auto;
+      .link {
+        @include margin(0 $size-03);
+        @include padding($size-07);
+      }
+      .active-option {
+        border-bottom: 4px solid $color-1;
+      }
+    }
+  }
+  .course-item {
+    width: 47%;
+    height: 150px;
+    .inner {
+      .t-2 {
+        font-size: $size-2;
+      }
+    }
+    .outer {
+      width: 46%;
+    }
+  }
+}
+
+@media only screen and (max-width: 1312px) {
+}
