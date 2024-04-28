@@ -29,36 +29,23 @@ export const colors = [
   "#594B12",
 ];
 
-export const validationSchemaRegister = Yup.object().shape({
-  prename: Yup.string()
-    .required("First Name is required")
-    .min(2, "The first name must have at least 2 caractors"),
-  name: Yup.string()
-    .required("Last Name is required")
-    .min(2, "The last name must have at least 2 caractors"),
-  username: Yup.string().required("Username is required"),
-  password: Yup.string()
-    .required("Password is required")
-    .min(4, "The password must have at least 4 caractors"),
-  confirm_password: Yup.string()
-    .required("Confirm password is required")
-    .oneOf([Yup.ref("password"), null], "The password must match!"),
-  gcu: Yup.boolean().oneOf(
-    [true],
-    "You have to be agree with the terms and privacy of using."
-  ),
+export const validationSchemaRegisterWithEmailAddress = Yup.object().shape({
+  mail: Yup.string()
+    .required("Enter your e-mail address")
+    .email("Invalid e-mail address"),
+});
+export const validationSchemaRegisterWithPhoneNumber = Yup.object().shape({
+  telephone: Yup.string().required("Phone number is required"),
 });
 
+export const validationSchemaNull = Yup.object().shape({});
+
 export const validationSchemaLoginStepOne = Yup.object().shape({
-  telephone: Yup.string().required(
-    "Phone number is required."
-  ),
+  telephone: Yup.string().required("Phone number is required."),
 });
 
 export const validationSchemaLoginStepTwo = Yup.object().shape({
-  code: Yup.string().required(
-    "Code is required."
-  ),
+  code: Yup.string().required("Code is required."),
   bsa: Yup.string().required("Complete BSA is required."),
 });
 
@@ -90,48 +77,6 @@ export const validationCompleteInscription = Yup.object().shape({
     .oneOf([Yup.ref("new_password"), null], "The password must match!"),
 });
 
-export const validationCompleteProgram = Yup.object().shape({
-  program_id: Yup.string().required("Program is required"),
-  level_id: Yup.string().required("Level of study is required"),
-});
-
 export const validationCompleteActivation = Yup.object().shape({
   confirmation_code: Yup.string().required("Input confirmation's code"),
-});
-
-export const validationProgram = Yup.object().shape({
-  program_country: Yup.string().required(
-    "Choose the country that based the program"
-  ),
-  program_language: Yup.string().required(
-    "Specify the language of the program"
-  ),
-  program_type: Yup.string().required("Specify the type of the program"),
-});
-
-export const validationLevel = Yup.object().shape({
-  program: Yup.string().required("Choose the concerned program"),
-  level: Yup.string().required("Provide the level of study"),
-  description: Yup.string().required("Describe the level of study"),
-});
-
-export const validationCourse = Yup.object().shape({
-  program: Yup.string().required("Choose the concerned program"),
-  level: Yup.string().required("Provide the level of study"),
-  title: Yup.string().required("Grab the title of course"),
-  description: Yup.string().required(
-    "Procide Description or Summary of the course"
-  ),
-});
-
-export const validationAddingContent = Yup.object().shape({
-  title: Yup.string().required("Grab the title content"),
-  type: Yup.string().required(
-    "Provide the type of accessibility to the content"
-  ),
-  language: Yup.string().required("Provide the langauge of the content"),
-  description: Yup.string().required(
-    "Provide Description or Summary of the content"
-  ),
-  thumbnail: Yup.string().required("Grab the content"),
 });

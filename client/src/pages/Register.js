@@ -7,61 +7,133 @@ import "react-phone-input-2/lib/style.css";
 import { BiCheck, IoCloseOutline } from "../middlewares/icons";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { validationSchemaRegister, wait } from "../utils/utils";
+import {
+  validationSchemaRegisterWithEmailAddress,
+  validationSchemaRegisterWithPhoneNumber,
+  validationSchemaNull,
+  wait,
+} from "../utils/utils";
 //
 import { inscription } from "../services/authentication";
 
 const Register = () => {
   const navigate = useNavigate();
   const [switched, setSwitched] = useState(false);
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(1);
   const [isSending, setIsSending] = useState(false);
   const [responseMessage, setResponseMessage] = useState("");
   const [classNameMsg, setClassNameMsg] = useState("");
+  const [otpCode, setOtpCode] = useState(new Array(6).fill(""));
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,
   } = useForm({
     mode: "onTouched",
-    resolver: yupResolver(validationSchemaRegister),
-    defaultValues: { gcu: false },
+    resolver: yupResolver(
+      step === 0
+        ? switched
+          ? validationSchemaRegisterWithPhoneNumber
+          : validationSchemaRegisterWithEmailAddress
+        : validationSchemaNull
+    ),
+    defaultValues: {
+      isRegisterWithPhoneNumber: true,
+    },
   });
 
-  const toggle = () => setSwitched(!switched);
+  const toggle = () => {
+    reset();
+    setSwitched(!switched);
+  };
+
+  const onOtpDigitHandling = (e, idx) => {
+    if (isNaN(e.target.value)) return false;
+    setOtpCode([
+      ...otpCode.map((val, k) => (k === idx ? e.target.value : val)),
+    ]);
+    if (e.target.value && e.target.nextSibling) e.target.nextSibling.focus();
+  };
 
   const onSubmit = async (data) => {
     setIsSending(true);
     await wait(1000);
-    inscription(data)
-      .then((response) => {
-        if (response?.data?.status === 1) {
+    setValue("isRegisterWithPhoneNumber", switched ? true : false);
+    //
+    if (step === 0) {
+      inscription(data)
+        .then((response) => {
+          if (response?.data?.status === 1) {
+            setIsSending(false);
+            setClassNameMsg("msg-box msg-box-success fade-in");
+            setResponseMessage(response?.data?.message);
+            reset();
+          }
+          // 
+          setValue("inscription", response?.data?.inscription);
+          // 
+          const timer = setTimeout(() => {
+            setClassNameMsg("display-none");
+            setStep(0);
+          }, 4000);
+          return () => clearTimeout(timer);
+        })
+        .catch((error) => {
           setIsSending(false);
-          setClassNameMsg("msg-box msg-box-success fade-in");
-          setResponseMessage(response?.data?.message);
-          reset();
-        }
-        const timer = setTimeout(() => {
-          setClassNameMsg("display-none");
-          navigate("/login", { replace: true });
-        }, 4000);
-        return () => clearTimeout(timer);
-      })
-      .catch((error) => {
-        setIsSending(false);
+          setClassNameMsg("msg-box msg-box-failed fade-in");
+          if (!error?.response) {
+            setResponseMessage("No server response");
+          } else {
+            setResponseMessage(error?.response?.data?.message);
+          }
+          const timer = setTimeout(() => {
+            setClassNameMsg("display-none");
+          }, 4000);
+          return () => clearTimeout(timer);
+        });
+    }
+    if (step === 1) {
+      const _otpCode = otpCode.join("");
+      if (_otpCode.length < 6) {
         setClassNameMsg("msg-box msg-box-failed fade-in");
-        if (!error?.response) {
-          setResponseMessage("No server response");
-        } else {
-          setResponseMessage(error?.response?.data?.message);
-        }
+        setResponseMessage("(Digit length incorrect) : The OTP Code must have 6-digit.");
+        setIsSending(false);
         const timer = setTimeout(() => {
           setClassNameMsg("display-none");
         }, 4000);
         return () => clearTimeout(timer);
-      });
+      }
+      inscription(data)
+        .then((response) => {
+          if (response?.data?.status === 1) {
+            setIsSending(false);
+            setClassNameMsg("msg-box msg-box-success fade-in");
+            setResponseMessage(response?.data?.message);
+            reset();
+          }
+          const timer = setTimeout(() => {
+            setClassNameMsg("display-none");
+            setStep(0);
+          }, 4000);
+          return () => clearTimeout(timer);
+        })
+        .catch((error) => {
+          setIsSending(false);
+          setClassNameMsg("msg-box msg-box-failed fade-in");
+          if (!error?.response) {
+            setResponseMessage("No server response");
+          } else {
+            setResponseMessage(error?.response?.data?.message);
+          }
+          const timer = setTimeout(() => {
+            setClassNameMsg("display-none");
+          }, 4000);
+          return () => clearTimeout(timer);
+        });
+    }
   };
 
   return (
@@ -135,10 +207,18 @@ const Register = () => {
                 {switched && (
                   <div className="input-div">
                     <PhoneInput
-                      country={"cd"}
-                      // inputProps={{ required: true }}
-                      {...register("telephone")}
+                      onChange={(val) => setValue("telephone", val)}
                       inputStyle={{ width: "100%" }}
+                      country={"cd"}
+                      countryCodeEditable={false}
+                      inputProps={{
+                        name: "telephone",
+                        required: true,
+                        autoFocus: true,
+                      }}
+                      autoFormat={true}
+                      enableSearch={true}
+                      specialLabel={"Phone Number"}
                     />
                     {errors.telephone && (
                       <span className="fade-in">
@@ -151,48 +231,15 @@ const Register = () => {
             )}
             {step === 1 && (
               <div className="input-otp">
-                <input
-                  type="text"
-                  className="input-form"
-                  autoComplete="none"
-                  placeholder=" "
-                  {...register("digit-1")}
-                />
-                <input
-                  type="text"
-                  className="input-form"
-                  autoComplete="none"
-                  placeholder=" "
-                  {...register("digit-2")}
-                />
-                <input
-                  type="text"
-                  className="input-form"
-                  autoComplete="none"
-                  placeholder=" "
-                  {...register("digit-3")}
-                />
-                <input
-                  type="text"
-                  className="input-form"
-                  autoComplete="none"
-                  placeholder=" "
-                  {...register("digit-4")}
-                />
-                <input
-                  type="text"
-                  className="input-form"
-                  autoComplete="none"
-                  placeholder=" "
-                  {...register("digit-5")}
-                />
-                <input
-                  type="text"
-                  className="input-form"
-                  autoComplete="none"
-                  placeholder=" "
-                  {...register("digit-6")}
-                />
+                {otpCode.map((el, i) => (
+                  <input
+                    type="text"
+                    className="input-form"
+                    value={el}
+                    maxLength={1}
+                    onChange={(e) => onOtpDigitHandling(e, i)}
+                  />
+                ))}
               </div>
             )}
             <button

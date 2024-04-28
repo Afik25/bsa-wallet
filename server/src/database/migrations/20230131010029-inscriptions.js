@@ -15,13 +15,12 @@ module.exports = {
         references: { model: "users", key: "id" },
         allowNull: false,
       },
-      level_id: {
-        type: Sequelize.INTEGER,
-        references: { model: "levels", key: "id" },
-        allowNull: true,
-      },
       dates: {
         type: Sequelize.DATE,
+        allowNull: true,
+      },
+      code: {
+        type: Sequelize.STRING,
         allowNull: true,
       },
       location: {

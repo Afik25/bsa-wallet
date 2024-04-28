@@ -5,8 +5,8 @@ class Inscription extends Model {
     super.init(
       {
         user_id: DataTypes.INTEGER,
-        level_id: DataTypes.INTEGER,
         dates: DataTypes.DATE,
+        code: DataTypes.STRING,
         location: DataTypes.STRING, // get the name of city. ex: mardid
         latitude: DataTypes.STRING,
         longitude: DataTypes.STRING,
@@ -28,11 +28,6 @@ class Inscription extends Model {
     this.belongsTo(models.User, {
       foreignKey: "user_id",
       as: "user_inscription",
-      allowNull: false,
-    });
-    this.belongsTo(models.Level, {
-      foreignKey: "level_id",
-      as: "level_inscription",
       allowNull: false,
     });
   }

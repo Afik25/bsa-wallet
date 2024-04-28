@@ -45,11 +45,6 @@ class User extends Model {
       as: "user_inscription",
       allowNull: false,
     });
-    this.hasMany(models.Subscription, {
-      foreignKey: "user_id",
-      as: "user_subscription",
-      allowNull: false,
-    });
     this.hasMany(models.Login, {
       foreignKey: "user_id",
       as: "user_login",
