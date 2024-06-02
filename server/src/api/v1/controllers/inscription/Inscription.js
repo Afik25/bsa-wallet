@@ -2,28 +2,31 @@ const User = require("../../models/inscription/User");
 const Inscription = require("../../models/inscription/Inscription");
 //
 const { generateOTP } = require("../../../../utils/utils");
-const bcrypt = require("bcrypt");
 const moment = require("moment");
 const uuid = require("uuid");
 
 module.exports = {
   async create(req, res) {
     try {
-      const { isRegisterWithPhoneNumber, mail, telephone, sys_role, dates } =
+      const { firstname, lastname, username, telephone, mail, sys_role, dates } =
         req.body;
 
-      const checkMail = await User.findOne({
-        where: { mail: mail },
-      });
+      const checkMail =
+        mail &&
+        (await User.findOne({
+          where: { mail: mail },
+        }));
       if (checkMail)
         return res.status(400).json({
           status: false,
-          message: "The e-mail is already used!",
+          message: "The e-mail address is already used!",
         });
 
-      const checkPhone = await User.findOne({
-        where: { telephone: telephone },
-      });
+      const checkPhone =
+        telephone &&
+        (await User.findOne({
+          where: { telephone: telephone },
+        }));
       if (checkPhone)
         return res.status(400).json({
           status: false,
@@ -59,39 +62,62 @@ module.exports = {
       }
       return res.status(400).json({
         status: false,
-        message: `Inscription process for the provided ${isRegisterWithPhoneNumber ? "Phone number" : "E-mail address"} failed.`,
+        message: `Inscription process for the provided ${
+          isRegisterWithPhoneNumber ? "Phone number" : "E-mail address"
+        } failed.`,
       });
     } catch (error) {
+      console.log({ "Error Inscription process ": error });
       return res.status(400).json({
         status: false,
         message: "(CATCH) Inscription process failed.",
-        error
+        error,
       });
     }
   },
   async activate(req, res) {
     try {
-      const { id, confirmation_code, is_completed } = req.body;
+      const {
+        inscription,
+        location,
+        latitude,
+        longitude,
+        device,
+        ip_address,
+        operating_system,
+        navigator,
+      } = req.body;
 
-      const check_subscription = await Subscription.findOne({
-        where: { reference_transaction: confirmation_code },
-      });
-
-      if (check_subscription) {
-        const user = await User.update({ is_completed }, { where: { id: id } });
+      const inscriptionUpdate = await Inscription.update(
+        {
+          location,
+          latitude,
+          longitude,
+          device,
+          ip_address,
+          operating_system,
+          navigator,
+        },
+        { where: { id: inscription.id } }
+      );
+      if (inscriptionUpdate) {
         return res.status(200).json({
-          status: 1,
+          status: true,
           message: "Account confirmed and activated successfully.",
-          user,
+          inscriptionUpdate,
         });
       }
-
       return res.status(400).json({
-        status: 0,
+        status: false,
         message: "Account confirmation failed.",
       });
     } catch (error) {
       console.log({ "Error confirmation account ": error });
+      return res.status(400).json({
+        status: false,
+        message: "(CATCH) Account confirmation process failed.",
+        error,
+      });
     }
   },
 };

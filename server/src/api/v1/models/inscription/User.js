@@ -8,6 +8,7 @@ class User extends Model {
         firstname: DataTypes.STRING,
         lastname: DataTypes.STRING,
         gender: DataTypes.STRING,
+        username: DataTypes.STRING, // username is equivalente to User ID
         telephone: DataTypes.STRING,
         mail: DataTypes.STRING,
         birth: DataTypes.STRING,
@@ -24,18 +25,6 @@ class User extends Model {
         sequelize,
         freezeTableName: true,
         tableName: "users",
-        hooks: {
-          beforeCreate: (user) => {
-            const salt = bcrypt.genSaltSync();
-            user.password = bcrypt.hashSync(user.password, salt);
-          },
-          beforeUpdate: (user) => {
-            if (user.password) {
-              const salt = bcrypt.genSaltSync();
-              user.password = bcrypt.hashSync(user.password, salt);
-            }
-          },
-        },
       }
     );
   }

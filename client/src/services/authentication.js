@@ -6,10 +6,11 @@ import {
 } from "../routes";
 
 export async function login(data) {
-  const ipAPI = "https://api.ipify.org/?format=json" || "";
-  const response = (await fetch(ipAPI)) || "";
-  const responseData = (await response.json()) || "";
-  const ipAddress = responseData.ip || "127.0.0.1";
+  // const ipAPI = "https://api.ipify.org/?format=json" || "";
+  // const response = (await fetch(ipAPI)) || "";
+  // const responseData = (await response.json()) || "";
+  // const ipAddress = responseData.ip || "127.0.0.1";
+  const ipAddress = "127.0.0.1";
   //
   const dates = new Date();
   const location = "N/A";
@@ -70,24 +71,23 @@ export function inscription(data) {
   });
 }
 
-export async function completeInscription(data) {
-  const ipAPI = "https://api.ipify.org/?format=json" || "";
-  const response = (await fetch(ipAPI)) || "";
-  const responseData = (await response.json()) || "";
-  const ipAddress = responseData.ip || "127.0.0.1";
+export async function activateInscription(data) {
+  // const ipAPI = "https://api.ipify.org/?format=json" || "";
+  // const response = (await fetch(ipAPI)) || "";
+  // const responseData = (await response.json()) || "";
+  // const ipAddress = responseData.ip || "127.0.0.1";
+  const ipAddress = "127.0.0.1";
   //
   const _data = {
     inscription: data?.inscription,
     //
-    dates: new Date(),
     location: "N/A",
     latitude: "N/A",
     longitude: "N/A",
     device: "PC",
     ip_address: ipAddress,
     operating_system: "Linux",
-    navigator: "Chrome",
-    end_date: new Date().setDate(new Date().getDate() + 3),
+    navigator: "Chrome"
   };
   return new Promise(async (resolve, reject) => {
     await axios

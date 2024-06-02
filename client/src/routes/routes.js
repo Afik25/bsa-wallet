@@ -8,6 +8,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Admin from "../pages/Admin";
 import User from "../pages/User";
+import CompleteRegister from '../components/complete/CompleteRegister';
 //
 // const Login = React.lazy(() => import("../pages/Login"));
 // const Register = React.lazy(() => import("../pages/Register"));
@@ -26,6 +27,7 @@ export const routes = [
       { path: "/", element: <Home /> },
       { path: "/register", element: <Register /> },
       { path: "/login", element: <Login /> },
+      { path: "/complete", element: <CompleteRegister /> },
       {
         element: <PersistLogin />,
         children: [

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 //
@@ -14,16 +14,16 @@ import {
   wait,
 } from "../utils/utils";
 //
-import { inscription } from "../services/authentication";
+import { inscription, activateInscription } from "../services/authentication";
 
 const Register = () => {
-  const navigate = useNavigate();
   const [switched, setSwitched] = useState(false);
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
   const [isSending, setIsSending] = useState(false);
   const [responseMessage, setResponseMessage] = useState("");
   const [classNameMsg, setClassNameMsg] = useState("");
   const [otpCode, setOtpCode] = useState(new Array(6).fill(""));
+  const [tmpCode, setTmpCode] = useState("");
 
   const {
     register,
@@ -66,18 +66,21 @@ const Register = () => {
     if (step === 0) {
       inscription(data)
         .then((response) => {
-          if (response?.data?.status === 1) {
+          if (response?.data?.status) {
             setIsSending(false);
             setClassNameMsg("msg-box msg-box-success fade-in");
-            setResponseMessage(response?.data?.message);
+            setResponseMessage(
+              `${response?.data?.message}. Code : ${response?.data?.inscription?.code}`
+            );
             reset();
           }
-          // 
+          //
+          setTmpCode(response?.data?.inscription?.code);
           setValue("inscription", response?.data?.inscription);
-          // 
+          //
           const timer = setTimeout(() => {
             setClassNameMsg("display-none");
-            setStep(0);
+            setStep(1);
           }, 4000);
           return () => clearTimeout(timer);
         })
@@ -99,40 +102,56 @@ const Register = () => {
       const _otpCode = otpCode.join("");
       if (_otpCode.length < 6) {
         setClassNameMsg("msg-box msg-box-failed fade-in");
-        setResponseMessage("(Digit length incorrect) : The OTP Code must have 6-digit.");
+        setResponseMessage(
+          "(Digit length incorrect) : The OTP Code must have 6-digit."
+        );
         setIsSending(false);
         const timer = setTimeout(() => {
           setClassNameMsg("display-none");
         }, 4000);
         return () => clearTimeout(timer);
       }
-      inscription(data)
-        .then((response) => {
-          if (response?.data?.status === 1) {
+      console.log({
+        "tmpCode typeof": typeof tmpCode,
+        "_otpCode typeof": typeof _otpCode,
+      });
+      console.log({ "tmpCode ": tmpCode, _otpCode: _otpCode });
+      if (tmpCode === _otpCode) {
+        activateInscription(data)
+          .then((response) => {
+            if (response?.data?.status) {
+              setIsSending(false);
+              setClassNameMsg("msg-box msg-box-success fade-in");
+              setResponseMessage(response?.data?.message);
+            }
+            const timer = setTimeout(() => {
+              setClassNameMsg("display-none");
+              setStep(0);
+            }, 4000);
+            return () => clearTimeout(timer);
+          })
+          .catch((error) => {
             setIsSending(false);
-            setClassNameMsg("msg-box msg-box-success fade-in");
-            setResponseMessage(response?.data?.message);
-            reset();
-          }
-          const timer = setTimeout(() => {
-            setClassNameMsg("display-none");
-            setStep(0);
-          }, 4000);
-          return () => clearTimeout(timer);
-        })
-        .catch((error) => {
-          setIsSending(false);
-          setClassNameMsg("msg-box msg-box-failed fade-in");
-          if (!error?.response) {
-            setResponseMessage("No server response");
-          } else {
-            setResponseMessage(error?.response?.data?.message);
-          }
-          const timer = setTimeout(() => {
-            setClassNameMsg("display-none");
-          }, 4000);
-          return () => clearTimeout(timer);
-        });
+            setClassNameMsg("msg-box msg-box-failed fade-in");
+            if (!error?.response) {
+              setResponseMessage("No server response");
+            } else {
+              setResponseMessage(error?.response?.data?.message);
+            }
+            const timer = setTimeout(() => {
+              setClassNameMsg("display-none");
+            }, 4000);
+            return () => clearTimeout(timer);
+          });
+      } else {
+        setClassNameMsg("msg-box msg-box-failed fade-in");
+        setResponseMessage("The OTP Code invalid.");
+        setIsSending(false);
+        const timer = setTimeout(() => {
+          setClassNameMsg("display-none");
+        }, 4000);
+        return () => clearTimeout(timer);
+      }
     }
   };
 
@@ -233,6 +252,7 @@ const Register = () => {
               <div className="input-otp">
                 {otpCode.map((el, i) => (
                   <input
+                  key={i}
                     type="text"
                     className="input-form"
                     value={el}

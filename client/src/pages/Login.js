@@ -28,6 +28,7 @@ const Login = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm({
     mode: "onTouched",
@@ -145,10 +146,18 @@ const Login = () => {
                     Phone number
                   </label>
                   <PhoneInput
-                    country={"cd"}
-                    // inputProps={{ required: true }}
-                    {...register("telephone")}
+                    onChange={(val) => setValue("telephone", val)}
                     inputStyle={{ width: "100%" }}
+                    country={"cd"}
+                    countryCodeEditable={false}
+                    inputProps={{
+                      name: "telephone",
+                      required: true,
+                      autoFocus: true,
+                    }}
+                    autoFormat={true}
+                    enableSearch={true}
+                    specialLabel={"Phone Number"}
                   />
                   {errors.telephone && (
                     <span className="fade-in">{errors.telephone.message}</span>

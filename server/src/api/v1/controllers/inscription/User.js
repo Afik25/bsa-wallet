@@ -8,8 +8,8 @@ module.exports = {
   async create(req, res) {
     try {
       const {
-        prename,
-        name,
+        firstname,
+        lastname,
         gender,
         telephone,
         mail,
@@ -60,8 +60,8 @@ module.exports = {
       const sys_id = uuid.v1()
       const password = generatePassword(6);
       const user = await User.create({
-        prename,
-        name,
+        firstname,
+        lastname,
         gender,
         telephone,
         mail,
