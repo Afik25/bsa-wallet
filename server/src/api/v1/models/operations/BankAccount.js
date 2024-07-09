@@ -5,6 +5,7 @@ class BankAccount extends Model {
     super.init(
       {
         code: DataTypes.STRING,
+        type: DataTypes.STRING, // mobile or banking
         names: DataTypes.STRING,
         currency: DataTypes.STRING,
         status: DataTypes.INTEGER,
