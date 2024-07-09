@@ -5,11 +5,11 @@ class Operation extends Model {
     super.init(
       {
         emeter_account_id: DataTypes.INTEGER,
-        type: DataTypes.STRING, // send, receive, withdraw
+        receiver_account_id: DataTypes.INTEGER,
+        type: DataTypes.STRING, // send, receive, withdraw, deposit
         key: DataTypes.STRING, // operation reference code
         amount: DataTypes.STRING,
         currency: DataTypes.STRING,
-        receiver_account_id: DataTypes.INTEGER,
         status: DataTypes.STRING,
       },
       {

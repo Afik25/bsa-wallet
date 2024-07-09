@@ -3,28 +3,29 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("accounts", {
+    await queryInterface.createTable("linked_accounts", {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
       },
-      user_id: {
+      wallet_id: {
         type: Sequelize.INTEGER,
-        references: { model: "users", key: "id" },
+        references: { model: "wallet_accounts", key: "id" },
         allowNull: true,
       },
-      code: {
-        type: Sequelize.STRING,
+      bank_id: {
+        type: Sequelize.INTEGER,
+        references: { model: "bank_accounts", key: "id" },
         allowNull: true,
       },
-      currency: {
-        type: Sequelize.STRING,
+      dates: {
+        type: Sequelize.DATE,
         allowNull: true,
       },
       status: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
         defaultValue: 1,
         validate: {
@@ -34,7 +35,6 @@ module.exports = {
       updated_at: {
         type: Sequelize.DATE,
         allowNull: true,
-        defaultValue: Sequelize.fn("now"),
       },
       created_at: {
         type: Sequelize.DATE,
@@ -45,6 +45,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("accounts");
+    await queryInterface.dropTable("linked_accounts");
   },
 };

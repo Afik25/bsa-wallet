@@ -12,7 +12,7 @@ class LinkAccount extends Model {
       {
         sequelize,
         freezeTableName: true,
-        tableName: "link_accounts",
+        tableName: "linked_accounts",
       }
     );
   }
