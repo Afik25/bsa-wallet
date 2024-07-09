@@ -28,6 +28,7 @@ class User extends Model {
       }
     );
   }
+  
   static associate(models) {
     this.hasMany(models.Inscription, {
       foreignKey: "user_id",
@@ -46,4 +47,5 @@ class User extends Model {
     });
   }
 }
+
 module.exports = User;

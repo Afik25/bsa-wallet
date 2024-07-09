@@ -1,4 +1,4 @@
-const User = require("../../models/inscription/User");
+const User = require("../../models/authentication/User");
 const { Op } = require("sequelize");
 const uuid = require('uuid');
 

@@ -6,6 +6,7 @@ import {
   BiEnvelope,
   BiSolidBookContent,
   BiCheck,
+  BiRefresh
 } from "react-icons/bi";
 import { BsEyeSlash, BsEye, BsPatchQuestion } from "react-icons/bs";
 import {
@@ -53,7 +54,7 @@ export {
   BiPhone,
   BiEnvelope,
   BiSolidBookContent,
-  BiCheck,
+  BiCheck,BiRefresh
 };
 export { BsEyeSlash, BsEye, BsPatchQuestion };
 export {

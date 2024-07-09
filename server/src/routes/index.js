@@ -4,9 +4,9 @@ const verifyJWT = require("../middlewares/verifyJWT");
 const uploadFiles = require("../middlewares/uploadFiles");
 const countries = require("../middlewares/countries.json");
 //
-const User = require("../api/v1/controllers/inscription/User");
-const Inscription = require("../api/v1/controllers/inscription/Inscription");
-const Login = require("../api/v1/controllers/login/Login");
+const User = require("../api/v1/controllers/authentication/User");
+const Inscription = require("../api/v1/controllers/authentication/Inscription");
+const Login = require("../api/v1/controllers/authentication/Login");
 //
 // root configure
 router.get("/auth/config", User.config);

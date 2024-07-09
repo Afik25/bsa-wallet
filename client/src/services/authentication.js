@@ -1,9 +1,5 @@
 import axios from "../middlewares/http-common";
-import {
-  LOGIN,
-  REGISTER,
-  REGISTER_ACTIVATION,
-} from "../routes";
+import { LOGIN, REGISTER, REGISTER_ACTIVATION } from "../routes";
 
 export async function login(data) {
   // const ipAPI = "https://api.ipify.org/?format=json" || "";
@@ -22,9 +18,9 @@ export async function login(data) {
   const navigator = "N/A";
   //
   const _data = {
-    username: data.username,
-    password: data.password,
+    username: data.mail,
     dates: dates,
+    from: "web",
     location: location,
     latitude: latitude,
     longitude: longitude,
@@ -87,7 +83,7 @@ export async function activateInscription(data) {
     device: "PC",
     ip_address: ipAddress,
     operating_system: "Linux",
-    navigator: "Chrome"
+    navigator: "Chrome",
   };
   return new Promise(async (resolve, reject) => {
     await axios

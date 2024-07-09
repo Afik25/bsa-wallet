@@ -1,8 +1,8 @@
-const User = require("../../models/inscription/User");
-const Login = require("../../models/login/Login");
-const Inscription = require("../../models/inscription/Inscription");
+const User = require("../../models/authentication/User");
+const Login = require("../../models/authentication/Login");
+const Account = require("../../models/operations/Account");
 //
-const bcrypt = require("bcrypt");
+const { generateOTP } = require("../../../../utils/utils");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const { Op } = require("sequelize");
@@ -11,9 +11,10 @@ module.exports = {
   async login(req, res) {
     try {
       const {
+        isReceivedOtpFromMail,
         username,
-        password,
         dates,
+        from,
         location,
         latitude,
         longitude,
@@ -39,27 +40,21 @@ module.exports = {
         return res.status(400).json({
           status: 0,
           isLogged: false,
-          message: "The username or/and password is/are wrong.",
+          message: "The provided ID is wrong.",
         });
       }
-
-      const level = await Inscription.findOne({ where: { user_id: user.id } });
-
-      if (!bcrypt.compareSync(password, user.password)) {
-        return res.status(400).json({
-          status: 0,
-          isLogged: false,
-          message: "The username or/and password is/are wrong.",
-        });
-      }
+      const account = await Account.findOne({
+        where: { user_id: user.id },
+      });
       const user_id = user.id;
+      const loginCode = generateOTP(4);
       //
       const refreshToken = jwt.sign(
         {
           userInfo: {
             user_id: user_id,
-            prename: user?.prename,
-            name: user?.name,
+            firstname: user?.firstname,
+            lastname: user?.lastname,
             gender: user?.gender,
             telephone: user?.telephone,
             mail: user?.mail,
@@ -67,7 +62,8 @@ module.exports = {
             username: user?.username,
             thumbnails: user?.thumbnails,
             is_completed: user?.is_completed,
-            level: level?.level_id,
+            login_code: loginCode,
+            account: account
           },
         },
         process.env.REFRESH_TOKEN_SECRET,
@@ -79,6 +75,8 @@ module.exports = {
       const login = await Login.create({
         user_id,
         dates,
+        from,
+        code: loginCode,
         location,
         latitude,
         longitude,
@@ -93,8 +91,8 @@ module.exports = {
         {
           userInfo: {
             user_id: user_id,
-            prename: user?.prename,
-            name: user?.name,
+            firstname: user?.firstname,
+            lastname: user?.lastname,
             gender: user?.gender,
             telephone: user?.telephone,
             mail: user?.mail,
@@ -102,8 +100,9 @@ module.exports = {
             username: user?.username,
             thumbnails: user?.thumbnails,
             is_completed: user?.is_completed,
-            level: level?.level_id,
+            login_code: loginCode,
             login: login?.id,
+            account: account
           },
         },
         process.env.ACCESS_TOKEN_SECRET,
@@ -126,6 +125,7 @@ module.exports = {
           message: "Connexion successfully!",
           sys_role: user?.sys_role,
           accessToken,
+          loginCode
         });
     } catch (error) {
       console.log({ "Error login user ": error });

@@ -7,7 +7,7 @@ class Inscription extends Model {
         user_id: DataTypes.INTEGER,
         dates: DataTypes.DATE,
         code: DataTypes.STRING,
-        location: DataTypes.STRING, // get the name of city. ex: mardid
+        location: DataTypes.STRING, // get the name of city. ex: madrid
         latitude: DataTypes.STRING,
         longitude: DataTypes.STRING,
         device: DataTypes.STRING,
@@ -32,4 +32,5 @@ class Inscription extends Model {
     });
   }
 }
+
 module.exports = Inscription;

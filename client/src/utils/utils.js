@@ -41,12 +41,7 @@ export const validationSchemaRegisterWithPhoneNumber = Yup.object().shape({
 export const validationSchemaNull = Yup.object().shape({});
 
 export const validationSchemaLoginStepOne = Yup.object().shape({
-  telephone: Yup.string().required("Phone number is required."),
-});
-
-export const validationSchemaLoginStepTwo = Yup.object().shape({
-  code: Yup.string().required("Code is required."),
-  bsa: Yup.string().required("Complete BSA is required."),
+  mail: Yup.string().required("E-mail is required."),
 });
 
 export const validationCompleteInscription = Yup.object().shape({

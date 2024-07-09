@@ -15,9 +15,22 @@ module.exports = {
         references: { model: "users", key: "id" },
         allowNull: true,
       },
+      room_id: {
+        type: Sequelize.INTEGER,
+        references: { model: "rooms", key: "id" },
+        allowNull: true,
+      },
       dates: {
         type: Sequelize.DATE,
         allowNull: false,
+      },
+      from: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      code: {
+        type: Sequelize.STRING,
+        allowNull: true,
       },
       location: {
         type: Sequelize.STRING,
@@ -50,6 +63,11 @@ module.exports = {
       refresh_token: {
         type: Sequelize.TEXT,
         allowNull: false,
+      },
+      confirm_status: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
       },
       connection_status: {
         type: Sequelize.INTEGER,

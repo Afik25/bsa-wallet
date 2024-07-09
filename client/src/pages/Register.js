@@ -162,7 +162,7 @@ const Register = () => {
         <meta name="description" content="" />
         <meta name="keywords" content="" />
       </Helmet>
-      <div className="sign-in">
+      <div className="sign-up">
         <div className="left col-l-6 col-s-12">
           <div className="head display-flex justify-content-space-between">
             <Link to="/" className="link">
