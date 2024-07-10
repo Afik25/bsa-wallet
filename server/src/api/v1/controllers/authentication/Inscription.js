@@ -1,6 +1,6 @@
 const User = require("../../models/authentication/User");
 const Inscription = require("../../models/authentication/Inscription");
-const Account = require("../../models/operations/Account");
+const WalletAccount = require("../../models/operations/WalletAccount");
 //
 const { generateOTP } = require("../../../../utils/utils");
 const moment = require("moment");
@@ -88,7 +88,7 @@ module.exports = {
         });
         if (inscription) {
           const accountCode = generateOTP(16);
-          await Account.create({
+          await WalletAccount.create({
             user_id: user.id,
             code: accountCode,
             currency: "USD",

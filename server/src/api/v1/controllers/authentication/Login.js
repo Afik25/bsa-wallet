@@ -1,6 +1,6 @@
 const User = require("../../models/authentication/User");
 const Login = require("../../models/authentication/Login");
-const Account = require("../../models/operations/Account");
+const WalletAccount = require("../../models/operations/WalletAccount");
 //
 const { generateOTP } = require("../../../../utils/utils");
 const jwt = require("jsonwebtoken");
@@ -43,7 +43,7 @@ module.exports = {
           message: "The provided ID is wrong.",
         });
       }
-      const account = await Account.findOne({
+      const account = await WalletAccount.findOne({
         where: { user_id: user.id },
       });
       const user_id = user.id;
